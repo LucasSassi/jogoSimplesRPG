@@ -226,8 +226,8 @@ void PlayerAttack(void) {
         if (boss.hp < 0) boss.hp = 0;
         sprintf(messageBuffer, "Voce atacou com a espada! Causou %d de dano!", damage);
     } else {
-        int min = 5;
-        int max = 15;
+        int min = 15;
+        int max = 22;
         damage = min + (rand() % (max - min + 1));
         boss.hp -= damage;
         if (boss.hp < 0) boss.hp = 0;

@@ -552,25 +552,25 @@ void DrawExplore(void)
 
     switch (currentStage)
     {
-    case 0:
-        storyText = "Entrada da masmorra.";
-        leftDoorLabel = "Caverna umida";
-        rightDoorLabel = "Ponte antiga";
+    case 0: // O jogo te dá Poção em ambas as escolhas aqui
+        storyText = "Voce chega aos portoes do Castelo CTS exausto.\nPrecisa recuperar as forcas antes de entrar.";
+        leftDoorLabel = "Beber da Fonte";
+        rightDoorLabel = "Comer Frutas";
         break;
-    case 1:
-        storyText = "Dois pedestais.";
-        leftDoorLabel = "Chamas";
-        rightDoorLabel = "Sombras";
+    case 1: // Esquerda = Espada, Direita = Bomba
+        storyText = "No arsenal abandonado, voce ve duas armas.\nQual estilo de combate voce prefere?";
+        leftDoorLabel = "Espada Antiga";
+        rightDoorLabel = "Bomba Caseira";
         break;
-    case 2:
-        storyText = "Um guarda protege o caminho.";
-        leftDoorLabel = "Tunel Escuro";
-        rightDoorLabel = "Sino Quebrado";
+    case 2: // Esquerda = Armadura, Direita = Moeda
+        storyText = "Um esqueleto segura dois itens valiosos.\nVoce prioriza protecao ou tenta subornar o chefe?";
+        leftDoorLabel = "Armadura Leve";
+        rightDoorLabel = "Bolsa de Ouro";
         break;
-    case 3:
-        storyText = "Quase la.";
-        leftDoorLabel = "Lado Bronze";
-        rightDoorLabel = "Lado Prata";
+    case 3: // O jogo te dá Poção em ambas as escolhas aqui
+        storyText = "A porta do trono esta a frente. O medo gela a espinha.\nUltima chance de curar ferimentos.";
+        leftDoorLabel = "Usar Curativos";
+        rightDoorLabel = "Tonico Vital";
         break;
     }
 
@@ -619,7 +619,7 @@ void DrawBattle(void)
     const int BAR_H = 25;
 
     // UI Player
-    DrawText("ENDRICK", BAR_MARGIN, BAR_MARGIN, 22, (Color){150, 200, 255, 255});
+    DrawText("Player (você)", BAR_MARGIN, BAR_MARGIN, 22, (Color){150, 200, 255, 255});
     DrawRectangle(BAR_MARGIN, BAR_MARGIN + 35, BAR_W, BAR_H, (Color){50, 50, 80, 255});
     DrawRectangle(BAR_MARGIN, BAR_MARGIN + 35, (int)(BAR_W * ((float)player.hp / player.maxHp)), BAR_H, (Color){50, 200, 100, 255});
     DrawRectangleLines(BAR_MARGIN, BAR_MARGIN + 35, BAR_W, BAR_H, WHITE);
@@ -627,7 +627,7 @@ void DrawBattle(void)
 
     // UI Boss
     int bossBarX = SCREEN_WIDTH - BAR_W - BAR_MARGIN;
-    DrawText("CTS", bossBarX, BAR_MARGIN, 22, (Color){255, 100, 100, 255});
+    DrawText("Boss", bossBarX, BAR_MARGIN, 22, (Color){255, 100, 100, 255});
     DrawRectangle(bossBarX, BAR_MARGIN + 35, BAR_W, BAR_H, (Color){50, 50, 80, 255});
     DrawRectangle(bossBarX, BAR_MARGIN + 35, (int)(BAR_W * ((float)boss.hp / boss.maxHp)), BAR_H, (Color){255, 50, 50, 255});
     DrawRectangleLines(bossBarX, BAR_MARGIN + 35, BAR_W, BAR_H, WHITE);
@@ -758,7 +758,7 @@ void DrawTitleScreen(void)
         ClearBackground((Color){10, 10, 30, 255});
     }
 
-    DrawText("RushRPG", SCREEN_WIDTH / 2 - MeasureText("RushRPG", 80) / 2, 100, 80, GOLD);
+    DrawText("Rush RPG", SCREEN_WIDTH / 2 - MeasureText("RushRPG", 80) / 2, 100, 80, GOLD);
 
     // Piscada no texto
     if (((int)(GetTime() * 2) % 2) == 0)
@@ -766,7 +766,7 @@ void DrawTitleScreen(void)
         DrawText("Pressione [ENTER] para comecar", SCREEN_WIDTH / 2 - MeasureText("Pressione [ENTER] para comecar", 30) / 2, SCREEN_HEIGHT - 100, 30, GREEN);
     }
 
-    const char *students[] = {"Lucas Del Pozo", "Lucas Sassi", "Eduardo Parize", "Vinicius Ribas Bida"};
+    const char *students[] = {"Lucas Del Pozo", "Lucas Sassi de Souza", "Eduardo Parize", "Vinicius Ribas Bida"};
     int namesY = SCREEN_HEIGHT - 180;
     DrawRectangle(SCREEN_WIDTH - 250, namesY - 10, 240, 150, (Color){0, 0, 0, 150});
     DrawText("Desenvolvido por:", SCREEN_WIDTH - 240, namesY, 12, WHITE);

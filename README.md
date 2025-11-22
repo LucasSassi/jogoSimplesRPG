@@ -1,170 +1,126 @@
-# 🎮 Jogo RPG de Turnos - Masmorra do Chefe
+# ⚔️ Rush RPG
 
-Um jogo RPG baseado em turnos desenvolvido em **C com Raylib**. O jogador passa por 4 estágios de exploração coletando itens antes de enfrentar um chefe final em uma batalha dinâmica e desafiadora.
-
-## 📋 Características
-
-### 🎯 Mecânicas Principais
-
-- **Exploração Interativa**: 4 estágios com escolhas binárias que definem seu inventário
-- **Sistema de Combate por Turnos**: Batalha contra um chefe com dano aleatório
-- **5 Itens Únicos**: Cada um com efeito diferente na batalha
-- **3 Finais Diferentes**: Vitória, Derrota ou Fuga
-- **Balanceamento Dinâmico**: Armadura reduz dano, Espada aumenta dano de ataque
-
-### 🎨 Visual
-
-- Sprites coloridos e animados para jogador e boss
-- Interface intuitiva com caixas de seleção destacadas
-- Barras de HP dinâmicas em tempo real
-- Mensagens de ação em tempo real
-- Temas de cores temáticos por seção
+**Rush RPG** é um jogo de aventura e estratégia em turnos desenvolvido em linguagem **C** utilizando a biblioteca **Raylib**. O jogador deve atravessar diferentes estágios, fazendo escolhas estratégicas de itens para se preparar para a batalha final contra o Chefe.
 
 ## 🎮 Como Jogar
 
-### Controles
+O jogo é dividido em duas fases principais:
 
-**Exploração:**
-- `1` - Escolha a primeira opção
-- `2` - Escolha a segunda opção
+### 1\. Exploração (Fases 1 a 4)
 
-**Batalha:**
-- `SETA ESQUERDA/DIREITA` - Navegar pelo inventário
-- `ENTER` - Usar item selecionado
-- `A` - Atacar com arma/desarmado
-- `ENTER` (Final) - Reiniciar jogo
+Você controla o herói e deve caminhar até uma das duas portas disponíveis. Cada porta oferece um item diferente que será guardado no seu inventário (máximo de **4 itens**).
 
-### 📦 Itens Disponíveis
+  * **Objetivo:** Escolher os itens que melhor se adaptam à sua estratégia (Cura, Dano, Defesa ou Sorte).
 
-| Item | Descrição | Tipo | Disponibilidade |
-|------|-----------|------|-----------------|
-| **Poção** | Cura 50 HP | Consumível | Estágios 0 e 3 |
-| **Espada** | Aumenta dano (20-40 vs 5-15) | Passivo | Estágio 1, Choice 1 |
-| **Bomba** | Dano alto (60-90 HP) | Consumível | Estágio 1, Choice 2 |
-| **Armadura** | Reduz dano recebido 50% | Passivo | Estágio 2, Choice 1 |
-| **Moeda** | 50% chance de escapar | Consumível | Estágio 2, Choice 2 |
+### 2\. Batalha (Fase Final)
 
-### 🗺️ Caminho Recomendado (Todos os Itens)
+Você enfrenta o Chefe usando os itens coletados durante a exploração. O combate é por turnos.
 
-1. **Estágio 0**: Pressione `1` → Poção
-2. **Estágio 1**: Pressione `1` → Espada
-3. **Estágio 2**: Pressione `1` → Armadura
-4. **Estágio 3**: Pressione `2` → Poção
+  * **Ataque:** Causa dano ao chefe (o dano aumenta se você pegou a Espada).
+  * **Itens disponíveis:**
+      * 🧪 **Poção:** Recupera vida.
+      * 💣 **Bomba:** Causa dano massivo.
+      * ⚔️ **Espada:** Passiva. Aumenta o dano dos seus ataques básicos.
+      * 🛡️ **Armadura:** Passiva. Reduz o dano recebido do chefe.
+      * 💰 **Moeda:** Tem **50% de chance** de distrair o chefe para você fugir (vitória imediata) ou falhar e perder o turno.
 
-*Alternativa com Moeda: No Estágio 2, pressione `2` → Moeda (50% de chance de fuga)*
+-----
 
-## ⚔️ Sistema de Batalha
+## ⌨️ Controles
 
-### Status Inicial
-- **Jogador**: 150 HP
-- **Chefe**: 200 HP
-- **Dano do Chefe**: Base 22 (varia ±5, sem armadura: 17-27 | com armadura: 8-13)
+| Tecla | Ação | Contexto |
+| :--- | :--- | :--- |
+| **Setas / A e D** | Mover personagem | Exploração |
+| **Setas / A e D** | Selecionar Item | Batalha |
+| **Enter** | Entrar na Porta / Confirmar | Exploração / Menu |
+| **Enter** | Usar Item Selecionado | Batalha |
+| **A** | Atacar o Chefe | Batalha |
 
-### Danos
-- **Sem Espada**: 5-15 dano
-- **Com Espada**: 20-40 dano
-- **Bomba**: 60-90 dano
-- **Com Armadura**: Dano recebido reduzido em 50%
+-----
 
-### Finais Possíveis
-1. **VITÓRIA** ✅ - Derrotar o chefe (HP ≤ 0)
-2. **GAME OVER** ❌ - Jogador derrotado (HP ≤ 0)
-3. **FUGA** 🏃 - Usar moeda com sucesso (50% de chance)
+## 📂 Estrutura de Arquivos
 
-## 🚀 Instalação e Execução
+Para o jogo funcionar com os gráficos, certifique-se de que a pasta `assets` esteja no mesmo diretório do executável.
 
-### Pré-requisitos
-- GCC (compilador C)
-- Raylib instalado no sistema
+```plaintext
+seu_projeto/
+│
+├── main.c              # O código fonte do jogo (ou rpc.c)
+├── rush_rpg (ou .exe)  # O executável gerado
+│
+└── assets/             # Pasta de imagens (Opcional, mas recomendada)
+    ├── boss_player/
+    │   ├── player.png
+    │   └── boss.png
+    ├── cenarios/
+    │   ├── title_bg.png
+    │   ├── battle_bg.png
+    │   └── cenario1.png
+    │   └── ...
+    ├── boss_attack.png
+    ├── player_attack.png
+    ├── boss_hit.png
+    └── player_hit.png
+```
 
-### Compilação
+-----
+
+## 🚀 Como rodar
+
+### 🐧 Linux (Ubuntu/Debian)
+
+**1. Instalar Dependências**
+Abra o terminal e instale o compilador GCC e a biblioteca Raylib:
 
 ```bash
-gcc -o rpg rpg.c -lraylib -lm -lpthread -ldl -lrt -lX11
+sudo apt update
+sudo apt install build-essential git libraylib-dev
 ```
 
-### Execução
+**2. Compilar**
+Navegue até a pasta do arquivo fonte (`rpg.c`) e execute:
 
 ```bash
-./rpg
+gcc rpg.c -lraylib -lGL -lm -lpthread -ldl -rt -Xlinker -zmuldefs -o rush_rpg
 ```
 
-### Teste Rápido
+**3. Executar**
+
 ```bash
-gcc -o rpg rpg.c -lraylib -lm -lpthread -ldl -lrt -lX11 && ./rpg
+./rush_rpg
 ```
 
-## 📁 Estrutura do Projeto
+### 🪟 Windows
 
-```
-jogoSimplesRPG/
-├── rpg.c           # Código-fonte principal
-├── README.md       # Este arquivo
-└── (binário rpg após compilação)
-```
+Existem várias formas, mas a mais fácil é usando o kit de desenvolvimento `w64devkit` ou instalando o compilador MinGW.
 
-## 🎨 Especificações Técnicas
+**Opção 1: Usando o Notepad++ com Raylib (Recomendado para iniciantes)**
 
-- **Resolução**: 1000×700 pixels
-- **FPS**: 60
-- **Linguagem**: C
-- **Biblioteca Gráfica**: Raylib
-- **Sistema de RNG**: Srand com seed baseada em tempo
+1.  Baixe o instalador do Raylib para Windows no site oficial ou GitHub.
+2.  A instalação inclui um compilador pré-configurado (geralmente em `C:/raylib/w64devkit`).
+3.  Abra o `rpg.c` no Notepad++ (incluso no pacote) e pressione **F6** para compilar e rodar.
 
-## 🔧 Funcionalidades Implementadas
+**Opção 2: Compilando via Linha de Comando (MinGW)**
+Se você já tem o GCC (MinGW) instalado e a biblioteca Raylib baixada:
 
-- ✅ Sistema de exploração com 4 estágios
-- ✅ Coleta dinâmica de itens
-- ✅ Batalha por turnos com IA do chefe
-- ✅ Dano aleatório para ambos os lados
-- ✅ Sistema de armadura (redução de dano)
-- ✅ Sistema de espada (aumento de dano)
-- ✅ Bomba com dano alto
-- ✅ Moeda com 50% de chance de escapar
-- ✅ 3 finais diferentes
-- ✅ Interface visual aprimorada
-- ✅ Mensagens de ação em tempo real
+1.  Certifique-se de que os arquivos de cabeçalho (`raylib.h`) e as bibliotecas (`libraylib.a`) estão acessíveis.
+2.  Execute o comando (ajuste os caminhos conforme sua instalação):
 
-## 📝 Exemplo de Gameplay
+<!-- end list -->
 
-```
-1. Exploração: Colete Poção → Espada → Armadura → Poção
-2. Batalha: Equipe Armadura, use Bomba, depois ataque com Espada
-3. Final: Derrote o chefe ou use Moeda para escapar
+```cmd
+gcc main.c -o rush_rpg.exe -O2 -I C:/caminho/para/raylib/include -L C:/caminho/para/raylib/lib -lraylib -lopengl32 -lgdi32 -lwinmm
 ```
 
-## 🎯 Dicas de Jogo
+3.  Execute o arquivo `rush_rpg.exe` criado.
 
-- A **Armadura** é essencial para reduzir o dano (50% de redução)
-- A **Espada** triplica seu dano (20-40 vs 5-15)
-- A **Bomba** é seu maior dano único (60-90)
-- A **Moeda** é um risco: 50% de fuga ou pode resultar em derrota
-- Combine **Armadura + Ataque com Espada** para uma estratégia equilibrada
+-----
 
-## 🐛 Troubleshooting
+## 👥 Créditos
 
-**Erro de compilação com Raylib:**
-```bash
-# Verifique se Raylib está instalado
-pkg-config --modversion raylib
+Desenvolvido por:
 
-# Ou instale-o
-sudo apt-get install libraylib-dev  # Linux Debian/Ubuntu
-```
-
-**Janela não abre:**
-- Verifique se há conflitos de display
-- Tente rodar em um terminal diferente
-- Verifique permissões de execução: `chmod +x rpg`
-
-## 👨‍💻 Autor
-
-Desenvolvido como um projeto de RPG educacional em C com Raylib.
-
-## 📄 Licença
-
-Projeto livre para uso e modificação.
-
----
-
-**Aproveite o jogo! 🎮✨**
+  * **Lucas Del Pozo**
+  * **Lucas Sassi de Souza**
+  * **Eduardo Parize**
+  * **Vinicius Ribas Bida**

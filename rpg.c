@@ -87,6 +87,9 @@ static Texture2D playerAttackTexture;
 static Texture2D bossAttackTexture;
 static Texture2D playerHitTexture;
 static Texture2D bossHitTexture;
+static Texture2D escapeEndingBackgroud;
+static Texture2D wonEndingBackgroud;
+static Texture2D loseEndingBackgroud;
 
 static Texture2D bgStage1;
 static Texture2D bgStage2;
@@ -308,8 +311,8 @@ void InitGame(void)
 
     player.hp = 120;
     player.maxHp = 120;
-    boss.hp = 200;
-    boss.maxHp = 200;
+    boss.hp = 210;
+    boss.maxHp = 210;
     boss.attack = 22;
 
     battleState = BATTLE_PLAYER_TURN;
@@ -331,6 +334,9 @@ void InitGame(void)
         bossTexture = LoadAsset("boss_player/boss");
         titleBackgroundTexture = LoadAsset("cenarios/title_bg");
         battleBackgroundTexture = LoadAsset("cenarios/battle_bg");
+        escapeEndingBackgroud = LoadAsset("cenarios/escapeEnding");
+        wonEndingBackgroud = LoadAsset("cenarios/wonEnding");
+        loseEndingBackgroud = LoadAsset("cenarios/loseEnding");
 
         bgStage1 = LoadAsset("cenarios/cenario1");
         bgStage2 = LoadAsset("cenarios/cenario2");
@@ -732,21 +738,46 @@ void DrawBattle(void)
 
 void DrawEnding(bool playerWon)
 {
-    ClearBackground((Color){20, 20, 40, 255});
-    DrawRectangleLines(SCREEN_WIDTH / 2 - 400, SCREEN_HEIGHT / 2 - 200, 800, 400, BLUE);
+    if (wonEndingBackgroud.id != 0 || loseEndingBackgroud.id != 0)
+    {
+        if (playerWon)
+        {
+            DrawTexturePro(wonEndingBackgroud, (Rectangle){0, 0, (float)wonEndingBackgroud.width, (float)wonEndingBackgroud.height},
+                           (Rectangle){0, 0, SCREEN_WIDTH, SCREEN_HEIGHT}, (Vector2){0, 0}, 0.0f, WHITE);
+        }
+        else
+        {
+            DrawTexturePro(loseEndingBackgroud, (Rectangle){0, 0, (float)loseEndingBackgroud.width, (float)loseEndingBackgroud.height},
+                           (Rectangle){0, 0, SCREEN_WIDTH, SCREEN_HEIGHT}, (Vector2){0, 0}, 0.0f, WHITE);
+        }
+    }
+    else
+    {
+        ClearBackground((Color){10, 10, 30, 255});
+    }
 
     const char *title = playerWon ? "VITORIA!" : "GAME OVER";
     Color col = playerWon ? GREEN : RED;
-    DrawText(title, SCREEN_WIDTH / 2 - MeasureText(title, 60) / 2, 200, 60, col);
-    DrawText("Pressione [ENTER] para jogar novamente.", 200, 500, 20, WHITE);
+    DrawText(title, SCREEN_WIDTH / 2 - MeasureText(title, 60) / 2, 100, 60, col);
+    const char *msg = "Pressione [ENTER] para jogar novamente.";
+    DrawText(msg, SCREEN_WIDTH / 2 - MeasureText(msg, 20) / 2, 630, 20, WHITE);
 }
 
 void DrawEscapeEnding(void)
 {
-    ClearBackground((Color){20, 20, 40, 255});
-    DrawText("FUGA!", SCREEN_WIDTH / 2 - MeasureText("FUGA!", 60) / 2, 200, 60, ORANGE);
-    DrawText("Voce fugiu com sucesso.", SCREEN_WIDTH / 2 - 100, 300, 20, WHITE);
-    DrawText("Pressione [ENTER] para jogar novamente.", 200, 500, 20, WHITE);
+    if (escapeEndingBackgroud.id != 0)
+    {
+        DrawTexturePro(escapeEndingBackgroud, (Rectangle){0, 0, (float)escapeEndingBackgroud.width, (float)escapeEndingBackgroud.height},
+                       (Rectangle){0, 0, SCREEN_WIDTH, SCREEN_HEIGHT}, (Vector2){0, 0}, 0.0f, WHITE);
+    }
+    else
+    {
+        ClearBackground((Color){10, 10, 30, 255});
+    }
+    DrawText("FUGA!", SCREEN_WIDTH / 2 - MeasureText("FUGA!", 60) / 2, 100, 60, ORANGE);
+    DrawText("Voce fugiu do boss com sucesso.", SCREEN_WIDTH / 2 - 100, 160, 20, WHITE);
+    const char *msg = "Pressione [ENTER] para jogar novamente.";
+    DrawText(msg, SCREEN_WIDTH / 2 - MeasureText(msg, 20) / 2, 633, 20, WHITE);
 }
 
 void DrawTitleScreen(void)
